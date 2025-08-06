@@ -8,12 +8,10 @@ class Pearldb < Formula
   depends_on "perl"
 
   def install
-    bin.install "bin/pearldb"
     libexec.install "lib"
-
-    # Patch the script to locate its modules
-    inreplace bin/"pearldb", /^use strict;/,
-      "use lib \"#{libexec}/lib\";\nuse strict;"
+    inreplace "bin/pearldb", "#!/usr/bin/env perl",
+              "#!/usr/bin/env perl\nuse lib '#{libexec}/lib';"
+    bin.install "bin/pearldb"
   end
 
   test do
