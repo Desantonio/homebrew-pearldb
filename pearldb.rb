@@ -10,13 +10,13 @@ class Pearldb < Formula
   def install
     bin.install "bin/pearldb"
     libexec.install "lib"
-    # Add lib directory to PERL5LIB
-    inreplace bin/"pearldb",
-      /^use strict;/,
-      "use lib \"\#{libexec}/lib\";\nuse strict;"
+
+    # Patch the script to locate its modules
+    inreplace bin/"pearldb", /^use strict;/,
+      "use lib \"#{libexec}/lib\";\nuse strict;"
   end
 
   test do
-    system "#{bin}/pearldb", "--version"
+    system "#{bin}/pearldb", "--help"
   end
 end
